@@ -11,15 +11,31 @@ namespace MCVStok.Controllers
     {
         // GET: Musteri
         MvcDbStokEntities db = new MvcDbStokEntities();
-        public ActionResult Index()
+        public ActionResult Index(string p)
         {
-            var degerler = db.TBLMUSTERILERs.ToList();
-            return View(degerler);
+            var degerler = from d in db.TBLMUSTERILERs select d;
+            if (!string.IsNullOrEmpty(p))
+            {
+                degerler = degerler.Where(m => m.MUSTERIAD.Contains(p)); 
+            }
+            return View(degerler.ToList());
+           // var degerler = db.TBLMUSTERILERs.ToList();
+            // return View(degerler);
+        }
+
+        [HttpGet]
+        public ActionResult YeniMusteri()
+        {
+            return View();
         }
 
         [HttpPost]
         public ActionResult YeniMusteri(TBLMUSTERILER p1)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("YeniMusteri");
+            }
             db.TBLMUSTERILERs.Add(p1);
             db.SaveChanges();
             return View();
@@ -37,6 +53,15 @@ namespace MCVStok.Controllers
         {
             var mus = db.TBLMUSTERILERs.Find(id);
             return View("MusteriGetir", mus);
+        }
+
+        public ActionResult Guncelle(TBLMUSTERILER p1)
+        {
+            var mstri = db.TBLMUSTERILERs.Find(p1);
+            mstri.MUSTERIAD = p1.MUSTERIAD;
+            mstri.MUSTERISOYAD = p1.MUSTERISOYAD;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 

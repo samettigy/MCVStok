@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
+
+@Html.BeginForm("Index", "Musteri", FormMethod.Get)
+{
+    <p>
+        Aranacak Müşteri Adı: @Html.TextBox("p");
+        <input type="submit" value="ara" />
+    </p>
+}
+
 <table class="table table-bordered">
     <tr>
         <th>MUSTERI ID</th>
@@ -15,15 +24,15 @@
     <tbody>
         @foreach (var mus in Model)
         {
-        <tr>
-            <th>@mus.MUSTERIID</th>
-            <td>@mus.MUSTERIAD</td>
-            <td>@mus.MUSTERISOYAD</td>
-            <td><a href="/Musteri/Sil/@mus.MUSTERIID" class="btn btn-danger">SİL</a></td>
-            <td><a href="/Musteri/MusteriGetir/@mus.MUSTERIID" class="btn btn-success">Güncelle</a></td>
-        </tr>
+            <tr>
+                <th>@mus.MUSTERIID</th>
+                <td>@mus.MUSTERIAD</td>
+                <td>@mus.MUSTERISOYAD</td>
+                <td><a href="/Musteri/Sil/@mus.MUSTERIID" class="btn btn-danger">SİL</a></td>
+                <td><a href="/Musteri/MusteriGetir/@mus.MUSTERIID" class="btn btn-success">Güncelle</a></td>
+            </tr>
         }
     </tbody>
-    </table>
-    <a href="/Musteri/YeniMusteri/" class="btn btn-primary">Yeni Müşteri Ekle</a>
+</table>
+<a href="/Musteri/YeniMusteri/" class="btn btn-primary">Yeni Müşteri Ekle</a>
 
